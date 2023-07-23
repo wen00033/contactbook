@@ -1,5 +1,4 @@
 <template>
-  {{ created() }}
   <div class="container m-auto">
     <h1 class="font-sans p-2 text-center text-4xl m-3 font-extrabold">
       Contact book
@@ -55,7 +54,19 @@
         </button>
       </form>
     </div>
-
+    <div class="flex md:flex-row p-3 bg-slate-400 gap-3">
+      <h1>Search people :</h1>
+      <form action="submit">
+        <input
+          @input="filter"
+          class="p-1"
+          v-model="this.search"
+          type="text"
+          name="text"
+          id="search"
+        />
+      </form>
+    </div>
     <div
       class="grid grid-cols-3 grid-rows gap-4 text-start uppercase text-sm p-2 m-2 text-white bg-slate-500"
     >
@@ -83,7 +94,6 @@ export default {
   components: {
     PeopleGroup,
   },
-
   data() {
     return {
       people: contactBook,
@@ -104,9 +114,20 @@ export default {
         car_year: null,
         location: null,
       },
+      search: "",
     };
   },
-  // Method create function and added into HTML
+  created() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.newContact.latitude = position.coords.latitude;
+        this.newContact.longitude = position.coords.longitude;
+      });
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  },
+
   methods: {
     sortby(element) {
       this.people = sortBy(this.people, element);
@@ -127,15 +148,11 @@ export default {
         alert("don't enter empty value with form 😥");
       }
     },
-    created() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          this.newContact.latitude = position.coords.latitude;
-          this.newContact.longitude = position.coords.longitude;
-        });
-      } else {
-        console.error("Geolocation is not supported by this browser.");
-      }
+    filter() {
+      console.log(this.search);
+      this.people = contactBook.filter((el) =>
+        el.first_name.toLowerCase().includes(this.search.toLowerCase())
+      );
     },
   },
   // computed: the computed categories would return a values in a new categories
@@ -145,14 +162,13 @@ export default {
       handler: function (newPeople) {
         localStorage.setItem("people", JSON.stringify(newPeople));
       },
-      deep: true,
     },
-  },
-  created() {
-    const storedContact = localStorage.getItem("people");
-    if (storedContact) {
-      this.people = JSON.parse(storedContact);
-    }
+    created() {
+      const storedContact = localStorage.getItem("people");
+      if (storedContact) {
+        this.people = JSON.parse(storedContact);
+      }
+    },
   },
 };
 </script>
