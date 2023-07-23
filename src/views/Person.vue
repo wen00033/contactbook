@@ -76,7 +76,7 @@
       </h1>
       <button
         class="bg-slate-500 text-white font-extrabold p-3 text-lg"
-        @click.prevent="saveHandler"
+        @click.prevent="() => saveHandler(person.id)"
       >
         Save it!🫡
       </button>
