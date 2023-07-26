@@ -54,8 +54,8 @@
         </button>
       </form>
     </div>
-    <div class="flex md:flex-row p-3 bg-slate-400 gap-3 items-center m-2">
-      <h1 class="text-2xl font-black uppercase text-white">Search people :</h1>
+    <div class="flex md:flex-row p-3 bg-slate-400 gap-3 items-center">
+      <h1 class="text-2xl font-black text-white">Search people :</h1>
       <form action="submit">
         <input
           @input="filter"
