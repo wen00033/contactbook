@@ -5,10 +5,6 @@
       <h1 class="text-xl font-bold p-3 text-white bg-slate-400">
         Name: {{ fullName }}
       </h1>
-    </div>
-    <div
-      class="flex justify-evenly flex-col gap-3 md:col-start-2 md:row-start-1 md:row-span-2"
-    >
       <h1 class="m-2 p-2 bg-slate-300 rounded-md">Email: {{ person.email }}</h1>
       <h1 v-if="person.phone">
         <h1 class="m-2 p-2 bg-slate-300 rounded-md">
@@ -81,15 +77,15 @@
         Save it!🫡
       </button>
     </div>
-    <Map :lat="person.latitude" :long="person.longitude" />
+    <Spot :lat="person.latitude" :long="person.longitude" />
   </div>
 </template>
 
 <script>
-import Map from "../components/Map.vue";
+import Spot from "../components/Map.vue";
 export default {
   components: {
-    Map,
+    Spot,
   },
   props: ["id"],
   data: function () {
@@ -99,6 +95,7 @@ export default {
     };
   },
   created() {
+    console.log(Spot);
     const storedPeople = localStorage.getItem("people");
     if (storedPeople) {
       this.people = JSON.parse(storedPeople);

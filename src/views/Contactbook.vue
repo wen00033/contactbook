@@ -1,5 +1,5 @@
 <template>
-  <div class="container m-auto">
+  <div class="container m-auto mb-7">
     <h1 class="font-sans p-2 text-center text-4xl m-3 font-extrabold">
       Contact book
     </h1>
@@ -54,8 +54,8 @@
         </button>
       </form>
     </div>
-    <div class="flex md:flex-row p-3 bg-slate-400 gap-3">
-      <h1>Search people :</h1>
+    <div class="flex md:flex-row p-3 bg-slate-400 gap-3 items-center m-2">
+      <h1 class="text-2xl font-black uppercase text-white">Search people :</h1>
       <form action="submit">
         <input
           @input="filter"
@@ -71,12 +71,16 @@
       class="grid grid-cols-3 grid-rows gap-4 text-start uppercase text-sm p-2 m-2 text-white bg-slate-500"
     >
       <div class="col-start-2">
-        <span class="cursor-pointer" @click="sortby('first_name')"
+        <span
+          class="cursor-pointer hover:text-red-600 hover:scale-150 focus:text-red-600 text-2xl font-black"
+          @click="sortby('first_name')"
           >First Name</span
         >
       </div>
       <div>
-        <span class="cursor-pointer" @click="sortby('last_name')"
+        <span
+          class="cursor-pointer hover:text-red-600 focus:text-red-600 text-2xl font-black"
+          @click="sortby('last_name')"
           >Last Name</span
         >
       </div>
@@ -107,7 +111,8 @@ export default {
         phone: null,
         latitude: null,
         longitude: null,
-        Avatar: "https://robohash.org/iddoloresest.png?size=250x250&set=set1",
+        Avatar:
+          "	https://robohash.org/voluptatibusdelectusanimi.png?size=250x250&set=set1",
         job_title: null,
         car_brand: null,
         car_model: null,
@@ -162,6 +167,7 @@ export default {
       handler: function (newPeople) {
         localStorage.setItem("people", JSON.stringify(newPeople));
       },
+      deep: true,
     },
     created() {
       const storedContact = localStorage.getItem("people");
