@@ -122,16 +122,6 @@ export default {
       search: "",
     };
   },
-  created() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.newContact.latitude = position.coords.latitude;
-        this.newContact.longitude = position.coords.longitude;
-      });
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  },
 
   methods: {
     sortby(element) {
@@ -169,12 +159,22 @@ export default {
       },
       deep: true,
     },
-    created() {
-      const storedContact = localStorage.getItem("people");
-      if (storedContact) {
-        this.people = JSON.parse(storedContact);
-      }
-    },
+  },
+  created() {
+    const storedContact = localStorage.getItem("people");
+    if (storedContact) {
+      this.people = JSON.parse(storedContact);
+    } else {
+      localStorage.setItem("people", JSON.stringify(contactBook));
+    }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.newContact.latitude = position.coords.latitude;
+        this.newContact.longitude = position.coords.longitude;
+      });
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
   },
 };
 </script>
